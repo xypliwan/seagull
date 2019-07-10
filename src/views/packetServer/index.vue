@@ -1,6 +1,6 @@
 <template>
   <div>
-    <img class="full-logo" src="./../../assets/images/SHIPPING ON TIME.png" alt>
+    <img class="full-logo" src="./../../assets/images/SHIPPING ON TIME.png" alt />
 
     <div class="full-content">
       <my-search
@@ -74,14 +74,17 @@
               <div class="note">{{item.note}}</div>
               <div class="table-title">
                 <div class="title-every">重量段</div>
-                <div class="title-every" v-for="(every,j) in item.zonePrices" :key="j">{{every.zone_name}}</div>
+                <!-- v-if="!(j>6 && j<item.zonePrices.length)" -->
+                <div class="title-every" :title="every.zone_name" v-if="!(j>6 && j<item.zonePrices.length -1)" v-for="(every,j) in item.zonePrices" :key="j">{{every.zone_name}}</div>
               </div>
               <div class="table-cont">
+                <!-- 重量段数据 -->
                 <div class="cont-every">
                   <div class="text" v-for="(one,l) in item.weightArr" :key="one.ref_wl_title">{{one.ref_wl_title}}</div>
                 </div>
 
-                <div class="cont-every" v-for="(every,j) in item.zonePrices" :key="j">
+                <!-- 地区价格数据 -->
+                <div class="cont-every" v-if="!(j>6 && j<item.zonePrices.length -1)" v-for="(every,j) in item.zonePrices" :key="j">
                   <div class="title-every" v-for="(one,l) in every.prices" :key="l">
                     <div class="fv-value">
                       {{item.currency_list.currency_symbol_left}}
@@ -97,7 +100,7 @@
                   <div class="text" v-for="one in item.outher_weightArr" :key="one.ref_wl_title">{{one.ref_wl_title}}</div>
                 </div>
 
-                <div class="cont-every" v-for="(every,j) in item.zonePrices" :key="j">
+                <div class="cont-every" v-if="!(j>6 && j<item.zonePrices.length -1)" v-for="(every,j) in item.zonePrices" :key="j">
                   <div class="title-every" v-for="(one,l) in every.outher_price" :key="l">
                     <div class="fv-value">
                       {{item.currency_list.currency_symbol_left}}
@@ -125,7 +128,7 @@
 </template>
 <script>
 import MySearch from '@/components/common/Search';
-import { getSeabulkBaseData, getSeabulkList,getBaseDestination } from '@/api/seabulk';
+import { getSeabulkBaseData, getSeabulkList, getBaseDestination } from '@/api/seabulk';
 import { formatSelectCheckout } from '@/utils/utils';
 import _ from 'lodash';
 export default {
@@ -331,6 +334,12 @@ export default {
         .title-every {
           flex: 1;
           text-align: center;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          padding: 0 5px;
+          // width: 155px;
+          // display: inline-block;
         }
       }
       .table-cont {
@@ -341,6 +350,8 @@ export default {
         .cont-every {
           flex: 1;
           text-align: center;
+          // width: 155px;
+          // display: inline-block;
           .text {
             font-size: 14px;
             color: #666;

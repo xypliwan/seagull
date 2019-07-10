@@ -7,6 +7,7 @@ import { formatMessage } from '@/utils/utils';
 
 
 const service = axios.create({
+  // baseURL:'http://api-open.haioupai.com/'
   baseURL
   // timeout: 20000 
 });
